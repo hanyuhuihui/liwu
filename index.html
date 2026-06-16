@@ -1,0 +1,986 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="爸爸的惊喜 - 父亲节快乐！生日快乐！" />
+  <title>爸爸的惊喜 🎉</title>
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #333;
+      background: #f5f5f5;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ===== Page Container ===== */
+    .page {
+      display: none;
+      min-height: 100vh;
+      width: 100%;
+      animation: fadeIn 0.6s ease forwards;
+    }
+    .page.active { display: flex; flex-direction: column; align-items: center; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== Buttons ===== */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 56px;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #2E86AB 0%, #5CB85C 100%);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      min-height: 56px;
+      letter-spacing: 2px;
+      box-shadow: 0 4px 20px rgba(46, 134, 171, 0.3);
+    }
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 30px rgba(46, 134, 171, 0.4);
+    }
+    .btn-primary:active { transform: scale(0.97); }
+
+    /* ===== Welcome Page ===== */
+    #page-welcome {
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(145deg, #2E86AB 0%, #5CB85C 50%, #F0C040 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 40px 24px;
+    }
+
+    /* Floating decorations */
+    .deco {
+      position: absolute;
+      pointer-events: none;
+      font-size: 32px;
+      opacity: 0.35;
+      animation: floatDeco 6s ease-in-out infinite;
+    }
+    .deco:nth-child(1) { top: 8%; left: 10%; animation-delay: 0s; font-size: 40px; }
+    .deco:nth-child(2) { top: 20%; right: 12%; animation-delay: 1s; font-size: 28px; }
+    .deco:nth-child(3) { top: 65%; left: 6%; animation-delay: 2s; font-size: 36px; }
+    .deco:nth-child(4) { top: 40%; right: 8%; animation-delay: 0.5s; font-size: 24px; }
+    .deco:nth-child(5) { bottom: 15%; left: 20%; animation-delay: 3s; font-size: 30px; }
+    .deco:nth-child(6) { top: 10%; right: 30%; animation-delay: 1.5s; font-size: 22px; }
+    .deco:nth-child(7) { bottom: 30%; right: 25%; animation-delay: 2.5s; font-size: 34px; }
+    .deco:nth-child(8) { top: 75%; right: 40%; animation-delay: 0.8s; font-size: 26px; }
+    .deco:nth-child(9) { bottom: 10%; right: 15%; animation-delay: 3.5s; font-size: 20px; }
+
+    @keyframes floatDeco {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-18px) rotate(5deg); }
+      50% { transform: translateY(-12px) rotate(-3deg); }
+      75% { transform: translateY(-22px) rotate(4deg); }
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+    }
+    .welcome-icon {
+      font-size: 72px;
+      margin-bottom: 24px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .welcome-title {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      line-height: 1.4;
+    }
+    .welcome-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .welcome-sub span {
+      display: inline-block;
+      margin: 0 4px;
+      animation: bounceIn 0.6s ease both;
+    }
+    .welcome-sub span:nth-child(1) { animation-delay: 0.1s; }
+    .welcome-sub span:nth-child(2) { animation-delay: 0.2s; }
+    .welcome-sub span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes bounceIn {
+      0% { transform: scale(0); opacity: 0; }
+      60% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .welcome-date {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      padding: 8px 24px;
+      border-radius: 30px;
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 36px;
+      letter-spacing: 1px;
+    }
+
+    /* ===== Game Page ===== */
+    #page-game {
+      justify-content: flex-start;
+      padding: 30px 16px 40px;
+      background: #fff;
+    }
+    .game-header {
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      padding: 20px 0 10px;
+    }
+    .game-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2E86AB;
+      margin-bottom: 8px;
+    }
+    .game-hint {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+    .game-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin: 16px 0 24px;
+    }
+    .game-stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+      background: #f5f5f5;
+      padding: 10px 24px;
+      border-radius: 12px;
+    }
+    .game-stat-item .label { font-weight: 400; color: #888; font-size: 16px; }
+    .game-stat-item .value { color: #2E86AB; font-size: 24px; }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      max-width: 560px;
+      width: 100%;
+      margin: 0 auto;
+      perspective: 1200px;
+    }
+
+    .card {
+      aspect-ratio: 1;
+      cursor: pointer;
+      position: relative;
+      border-radius: 14px;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+    .card.flipped { transform: rotateY(180deg); }
+    .card.matched { transform: rotateY(180deg); }
+    .card.matched .card-front {
+      box-shadow: 0 0 20px rgba(92, 184, 92, 0.5), 0 0 40px rgba(92, 184, 92, 0.2);
+    }
+    .card.disabled { pointer-events: none; }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      font-size: 48px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .card-back {
+      background: linear-gradient(145deg, #2E86AB, #3a9fc4);
+      color: #fff;
+      font-size: 32px;
+      font-weight: 700;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .card-back::after {
+      content: "?";
+      font-size: 40px;
+      opacity: 0.7;
+    }
+    .card-front {
+      background: #fff;
+      border: 2px solid #e8e8e8;
+      transform: rotateY(180deg);
+    }
+
+    /* Game Complete overlay */
+    .game-complete-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .game-complete-overlay.show {
+      display: flex;
+      animation: fadeIn 0.4s ease;
+    }
+    .complete-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 40px 48px;
+      text-align: center;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .complete-card .big-emoji { font-size: 64px; margin-bottom: 12px; }
+    .complete-card h2 {
+      font-size: 32px;
+      color: #2E86AB;
+      margin-bottom: 8px;
+    }
+    .complete-card p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .complete-card .countdown {
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    /* ===== Blessing Page ===== */
+    #page-blessing {
+      padding: 40px 20px 60px;
+      background: #fafafa;
+      min-height: 100vh;
+    }
+    .blessing-inner {
+      max-width: 780px;
+      width: 100%;
+    }
+    .blessing-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .blessing-header .icon-row {
+      font-size: 48px;
+      margin-bottom: 16px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .blessing-header h1 {
+      font-size: clamp(28px, 4.5vw, 38px);
+      font-weight: 800;
+      color: #222;
+      line-height: 1.4;
+    }
+    .blessing-header h1 .hl-blue { color: #2E86AB; }
+    .blessing-header h1 .hl-green { color: #5CB85C; }
+    .blessing-header h1 .hl-gold { color: #F0C040; }
+
+    .blessing-letter {
+      background: #fff;
+      border-radius: 16px;
+      padding: 36px 32px;
+      margin-bottom: 44px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .blessing-letter p {
+      font-size: 18px;
+      line-height: 2;
+      color: #444;
+      margin-bottom: 16px;
+      text-indent: 2em;
+    }
+    .blessing-letter p:last-child { margin-bottom: 0; }
+    .blessing-letter .letter-sign {
+      text-align: right;
+      font-size: 20px;
+      font-weight: 600;
+      color: #2E86AB;
+      margin-top: 20px;
+      text-indent: 0;
+    }
+    .blessing-letter .letter-sign small {
+      display: block;
+      font-weight: 400;
+      font-size: 16px;
+      color: #888;
+    }
+
+    /* Photo Gallery */
+    .gallery-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .photo-gallery-section {
+      background: linear-gradient(180deg, #f8f6f0 0%, #f5f0e8 100%);
+      border-radius: 20px;
+      padding: 32px 24px;
+      margin-bottom: 40px;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 100%;
+    }
+
+    .photo-item {
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .photo-item.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .photo-item[data-span="wide"] {
+      grid-column: span 2;
+    }
+    .photo-item[data-span="tall"] {
+      grid-row: span 2;
+    }
+
+    .photo-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #e8e4dc;
+      aspect-ratio: 1;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border: 3px solid #fff;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: default;
+    }
+    .photo-item[data-span="wide"] .photo-card { aspect-ratio: 2/1; }
+    .photo-item[data-span="tall"] .photo-card { aspect-ratio: 1/2; }
+
+    .photo-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .photo-card:hover img { transform: scale(1.08); }
+
+    .photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #e8e4dc, #ddd8ce);
+      color: #bbb;
+      font-size: 36px;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .photo-card img.loaded ~ .photo-placeholder { opacity: 0; }
+    .photo-item.img-error .photo-placeholder {
+      opacity: 1;
+      background: linear-gradient(135deg, #f0e6d0, #e8dcc4);
+    }
+    .photo-item.img-error .photo-placeholder::after {
+      content: "📷";
+      font-size: 48px;
+    }
+    .photo-item.img-error .photo-placeholder .loading-spinner { display: none; }
+
+    .blessing-footer {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #e8e8e8;
+    }
+    .blessing-footer p {
+      font-size: 20px;
+      color: #555;
+      line-height: 1.8;
+    }
+    .blessing-footer .footer-emphasis {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2E86AB;
+      margin-top: 8px;
+    }
+    .blessing-footer .footer-hearts {
+      font-size: 32px;
+      margin-top: 16px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* ===== Confetti Canvas ===== */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 200;
+    }
+
+    /* ===== Loading spinner ===== */
+    .loading-spinner {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 3px solid #e0e0e0;
+      border-top-color: #2E86AB;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .page-transition {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .page-transition.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      .card-grid { gap: 10px; }
+      .card-face { font-size: 36px; }
+      .card-back::after { font-size: 30px; }
+      .game-stat-item { padding: 8px 16px; font-size: 16px; }
+      .game-stat-item .value { font-size: 20px; }
+      .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .photo-item[data-span="wide"] { grid-column: span 2; }
+      .photo-item[data-span="tall"] { grid-row: span 1; }
+      .photo-item[data-span="tall"] .photo-card { aspect-ratio: 1; }
+      .photo-item[data-span="wide"] .photo-card { aspect-ratio: 1; }
+      .photo-gallery-section { padding: 20px 14px; }
+      .blessing-letter { padding: 24px 18px; }
+      .blessing-letter p { font-size: 16px; }
+      .complete-card { padding: 28px 20px; }
+      .welcome-icon { font-size: 56px; }
+      .btn-primary { padding: 14px 40px; font-size: 20px; min-height: 50px; }
+    }
+    @media (max-width: 400px) {
+      .card-grid { gap: 8px; }
+      .card-face { font-size: 28px; }
+      .card-back::after { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== Page Transition Overlay ===== -->
+<div class="page-transition" id="page-transition"></div>
+
+<!-- ===== Welcome Page ===== -->
+<div class="page active" id="page-welcome">
+  <div class="deco">⭐</div>
+  <div class="deco">❤️</div>
+  <div class="deco">✨</div>
+  <div class="deco">🌟</div>
+  <div class="deco">💛</div>
+  <div class="deco">🎈</div>
+  <div class="deco">⭐</div>
+  <div class="deco">❤️</div>
+  <div class="deco">✨</div>
+
+  <div class="welcome-content">
+    <div class="welcome-icon">🎉</div>
+    <h1 class="welcome-title">爸爸，有一个惊喜等你开启</h1>
+    <p class="welcome-sub">
+      <span>🎂</span><span>今</span><span>天</span><span>，</span><span>您</span><span>是</span><span>最</span><span>大</span><span>的</span><span>主</span><span>角</span><span>🎊</span>
+    </p>
+    <div class="welcome-date">🎈 父亲节 · 生日快乐 🎈</div>
+    <button class="btn-primary" onclick="startGame()">✨ 开始闯关 ✨</button>
+  </div>
+</div>
+
+<!-- ===== Game Page (Memory Match) ===== -->
+<div class="page" id="page-game">
+  <div class="game-header">
+    <div class="game-title">🎴 记忆翻牌挑战</div>
+    <p class="game-hint">点击卡片，找到所有配对！</p>
+    <div class="game-stats">
+      <div class="game-stat-item">
+        <span class="label">步数</span>
+        <span class="value" id="step-counter">0</span>
+      </div>
+      <div class="game-stat-item">
+        <span class="label">配对</span>
+        <span class="value"><span id="match-counter">0</span>/6</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-grid" id="card-grid"></div>
+</div>
+
+<!-- ===== Game Complete Overlay ===== -->
+<div class="game-complete-overlay" id="game-complete">
+  <div class="complete-card">
+    <div class="big-emoji">🎉</div>
+    <h2>🎊 恭喜通关！🎊</h2>
+    <p>爸爸太厉害了！<br/>正在为你开启祝福页面...</p>
+    <div class="countdown" id="countdown-text">2 秒后跳转</div>
+  </div>
+</div>
+
+<!-- ===== Blessing Page ===== -->
+<div class="page" id="page-blessing">
+  <div class="blessing-inner">
+    <div class="blessing-header">
+      <div class="icon-row">🎂🎉❤️</div>
+      <h1>
+        <span class="hl-blue">爸爸</span>，
+        <span class="hl-green">父亲节快乐</span>！<br/>
+        <span class="hl-gold">生日快乐</span>！
+      </h1>
+    </div>
+
+    <div class="blessing-letter">
+      <p>亲爱的爸爸：</p>
+      <p>今天过节，想对你说些心里话。</p>
+      <p>还记得小时候，你骑着那辆老自行车送我上学，冬天风大，你总是让我躲在身后，自己迎着冷风。那时候我不懂事，只觉得爸爸的后背好宽好暖。后来我们一起去旅行，你总是扛最重的行李，把靠窗的位子留给我和妈妈，自己坐在过道边。你话不多，可爱都藏在每一个细节里——修好的玩具、削好的苹果、电话那头永远的那句"挺好的，别担心"。</p>
+      <p>这些年我离家工作，每次回去看到你鬓角又多了一些白发，心里总是酸酸的。爸爸，你为这个家付出了太多太多，现在轮到女儿来照顾你了。</p>
+      <p>愿往后每一天都轻松自在，少操心多享福。愿你身体健康，笑口常开，想去的地方我都陪你去。我们要一起看更多的风景，一起拍更多的照片，一起走过更多的好日子。</p>
+      <p>爸爸，你是女儿心中最了不起的英雄。</p>
+      <p>父亲节快乐，生日快乐。我永远爱你。❤️</p>
+      <div class="letter-sign">
+        爱你的女儿<br/>
+        <small>2025年父亲节</small>
+      </div>
+    </div>
+
+    <h2 class="gallery-title">📸 我们的美好时光</h2>
+    <div class="photo-gallery-section">
+      <div class="photo-grid" id="photo-grid">
+        <div class="photo-item" data-index="0" data-span="wide">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/T2Sk9XgWG6M/" alt="家庭照片 1" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+        <div class="photo-item" data-index="1">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/UAb2fjnwLeM/" alt="家庭照片 2" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+        <div class="photo-item" data-index="2" data-span="tall">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/XGtoSuAkgrc/" alt="家庭照片 3" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+        <div class="photo-item" data-index="3">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/TPspa52_VXc/" alt="家庭照片 4" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+        <div class="photo-item" data-index="4" data-span="wide">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/VG65orAYEKU/" alt="家庭照片 5" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+        <div class="photo-item" data-index="5">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/T6P3GFPEvqI/" alt="家庭照片 6" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+        <div class="photo-item" data-index="6">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/UOadmzdGnHg/" alt="家庭照片 7" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+        <div class="photo-item" data-index="7" data-span="tall">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/TuN89gTUwf0/" alt="家庭照片 8" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+        <div class="photo-item" data-index="8">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/VqPot_8iAY0/" alt="家庭照片 9" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+        <div class="photo-item" data-index="9" data-span="wide">
+          <div class="photo-card">
+            <img src="https://www.coze.cn/s/VV0ZGbIIIsg/" alt="家庭照片 10" loading="lazy" onerror="this.parentElement.parentElement.classList.add('img-error')" />
+            <div class="photo-placeholder"><span class="loading-spinner"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blessing-footer">
+      <p>感谢你，用一生的爱守护我们。</p>
+      <p>愿时光温柔，待你以暖阳与春风。</p>
+      <div class="footer-emphasis">爸爸，我们永远爱你 ❤️</div>
+      <div class="footer-hearts">💙 💚 💛</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Confetti Canvas ===== -->
+<canvas id="confetti-canvas"></canvas>
+
+<script>
+  // ============================================================
+  //  Memory Card Game
+  // ============================================================
+  const EMOJIS = ['🎂', '🎁', '🎈', '🌟', '❤️', '🎊'];
+  const TOTAL_PAIRS = 6;
+  const TOTAL_CARDS = TOTAL_PAIRS * 2;
+
+  let cards = [];
+  let flippedCards = [];
+  let matchedCount = 0;
+  let steps = 0;
+  let isLocked = false;
+  let gameStarted = false;
+
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function initGame() {
+    const grid = document.getElementById('card-grid');
+    grid.innerHTML = '';
+    cards = [];
+    flippedCards = [];
+    matchedCount = 0;
+    steps = 0;
+    isLocked = false;
+    gameStarted = false;
+
+    document.getElementById('step-counter').textContent = '0';
+    document.getElementById('match-counter').textContent = '0';
+
+    // Create card data
+    let cardData = [];
+    EMOJIS.forEach((emoji, idx) => {
+      cardData.push({ id: idx, emoji });
+      cardData.push({ id: idx, emoji });
+    });
+    shuffle(cardData);
+
+    cardData.forEach((data, index) => {
+      const cardEl = document.createElement('div');
+      cardEl.className = 'card';
+      cardEl.dataset.index = index;
+      cardEl.dataset.cardId = data.id;
+      cardEl.innerHTML = `
+        <div class="card-face card-back"></div>
+        <div class="card-face card-front">${data.emoji}</div>
+      `;
+      cardEl.addEventListener('click', () => flipCard(cardEl));
+      grid.appendChild(cardEl);
+      cards.push(cardEl);
+    });
+  }
+
+  function flipCard(cardEl) {
+    if (isLocked) return;
+    if (cardEl.classList.contains('flipped') || cardEl.classList.contains('matched')) return;
+
+    // First click starts the game
+    if (!gameStarted) {
+      gameStarted = true;
+    }
+
+    cardEl.classList.add('flipped');
+    flippedCards.push(cardEl);
+
+    if (flippedCards.length === 2) {
+      steps++;
+      document.getElementById('step-counter').textContent = steps;
+      checkMatch();
+    }
+  }
+
+  function checkMatch() {
+    isLocked = true;
+    const [card1, card2] = flippedCards;
+
+    if (card1.dataset.cardId === card2.dataset.cardId) {
+      // Match!
+      setTimeout(() => {
+        card1.classList.add('matched', 'disabled');
+        card2.classList.add('matched', 'disabled');
+        matchedCount++;
+        document.getElementById('match-counter').textContent = matchedCount;
+        flippedCards = [];
+        isLocked = false;
+
+        if (matchedCount === TOTAL_PAIRS) {
+          setTimeout(() => onGameComplete(), 600);
+        }
+      }, 400);
+    } else {
+      // No match
+      setTimeout(() => {
+        card1.classList.remove('flipped');
+        card2.classList.remove('flipped');
+        flippedCards = [];
+        isLocked = false;
+      }, 800);
+    }
+  }
+
+  // ============================================================
+  //  Confetti Effect
+  // ============================================================
+  let confettiAnimId = null;
+
+  function startConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const colors = ['#2E86AB', '#5CB85C', '#F0C040', '#ff6b6b', '#ffa07a', '#87ceeb', '#dda0dd', '#98fb98'];
+
+    for (let i = 0; i < 180; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: Math.random() * 10 + 5,
+        h: Math.random() * 6 + 3,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 3,
+        vy: Math.random() * 3 + 2,
+        rot: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 6,
+        opacity: 1,
+        swing: Math.random() * 2,
+      });
+    }
+
+    let frame = 0;
+    function draw() {
+      frame++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let alive = false;
+      for (const p of particles) {
+        p.x += p.vx + Math.sin(frame * 0.02 + p.swing) * 0.8;
+        p.y += p.vy;
+        p.vy += 0.04;
+        p.rot += p.rotSpeed;
+
+        if (p.y > canvas.height + 20) {
+          p.opacity -= 0.02;
+        }
+
+        if (p.opacity > 0) {
+          alive = true;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rot * Math.PI) / 180);
+          ctx.globalAlpha = Math.max(0, p.opacity);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        }
+      }
+
+      if (alive || frame < 120) {
+        confettiAnimId = requestAnimationFrame(draw);
+      }
+    }
+    draw();
+  }
+
+  function stopConfetti() {
+    if (confettiAnimId) {
+      cancelAnimationFrame(confettiAnimId);
+      confettiAnimId = null;
+    }
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // ============================================================
+  //  Page Transitions
+  // ============================================================
+  function switchPage(pageId) {
+    const transition = document.getElementById('page-transition');
+    transition.classList.add('active');
+
+    setTimeout(() => {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }, 300);
+
+    setTimeout(() => {
+      transition.classList.remove('active');
+    }, 600);
+  }
+
+  function startGame() {
+    switchPage('page-game');
+    setTimeout(() => initGame(), 350);
+  }
+
+  function onGameComplete() {
+    const overlay = document.getElementById('game-complete');
+    overlay.classList.add('show');
+    startConfetti();
+
+    let count = 2;
+    const countdownEl = document.getElementById('countdown-text');
+    const timer = setInterval(() => {
+      count--;
+      countdownEl.textContent = count + ' 秒后跳转';
+      if (count <= 0) {
+        clearInterval(timer);
+        overlay.classList.remove('show');
+        stopConfetti();
+        switchPage('page-blessing');
+        setTimeout(triggerPhotoAnimation, 400);
+      }
+    }, 1000);
+  }
+
+  // ============================================================
+  //  Photo Gallery Entrance Animation
+  // ============================================================
+  function triggerPhotoAnimation() {
+    const items = document.querySelectorAll('.photo-item');
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          const delay = parseInt(entry.target.dataset.index) * 120;
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, delay);
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { threshold: 0.1 });
+
+    items.forEach(item => observer.observe(item));
+
+    // Also add visible class directly after a delay for initial items
+    items.forEach((item, index) => {
+      setTimeout(() => {
+        // Check if item is in viewport
+        const rect = item.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+          setTimeout(() => {
+            item.classList.add('visible');
+          }, index * 120);
+          observer.unobserve(item);
+        }
+      }, 600);
+    });
+  }
+
+  // ============================================================
+  //  Resize handler for confetti canvas
+  // ============================================================
+  window.addEventListener('resize', () => {
+    const canvas = document.getElementById('confetti-canvas');
+    if (canvas) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+  });
+
+  // ============================================================
+  //  Init - first page is welcome (already set in HTML)
+  // ============================================================
+
+  // Image load handling
+  document.querySelectorAll('.photo-item img').forEach(img => {
+    img.addEventListener('load', () => {
+      img.classList.add('loaded');
+    });
+    img.addEventListener('error', () => {
+      // img -> .photo-card -> .photo-item
+      img.closest('.photo-item').classList.add('img-error');
+    });
+    // If image is already cached
+    if (img.complete && img.naturalWidth > 0) {
+      img.classList.add('loaded');
+    } else if (img.complete && img.naturalWidth === 0) {
+      img.closest('.photo-item').classList.add('img-error');
+    }
+  });
+
+  console.log('🎯 爸爸的惊喜闯关游戏已加载完成！');
+</script>
+</body>
+</html>
